@@ -13,6 +13,9 @@ let food = [{x:160, y:160}];
 let score = 0;
 let hasEaten = false;
 
+let lastRenderTime = 0;
+const gameSpeed = 5;
+
 function drawSnake() {
     snake.forEach(segment => {
         ctx.fillStyle = 'green';
@@ -105,10 +108,13 @@ function checkCollisionWithSelf() {
 
 document.addEventListener('keydown', changeDirection);
 
-function gameLoop() {
-    update();
-    setTimeout(gameLoop, 200)
+function gameLoop(currentTime) {
+    if(currentTime - lastRenderTime >= 1000/ gameSpeed) {
+    update()
+    lastRenderTime = currentTime;
 }
+    requestAnimationFrame(gameLoop);
+} 
 gameLoop();
 
 function update() {
