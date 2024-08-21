@@ -45,10 +45,17 @@ function checkIfEaten() {
     } else hasEaten = false;
 }
 
-function spawnFood() {
-    const randomX = Math.floor(Math.random()*(canvas.width/gridSize))*gridSize;
-    const randomY = Math.floor(Math.random()*(canvas.height/gridSize))*gridSize;
-    food[0] = { x: randomX, y: randomY};
+    function spawnFood() {
+        let randomX, randomY;
+        do {
+        randomX = Math.floor(Math.random()*(canvas.width/gridSize))*gridSize;
+        randomY = Math.floor(Math.random()*(canvas.height/gridSize))*gridSize;
+        } while (isFoodOnSnake(randomX, randomY));
+        food[0] = { x: randomX, y: randomY};
+    }
+
+function isFoodOnSnake(x, y) {
+    return snake.some(segment => segment.x === x && segment.y === y);
 }
 
 function drawFood() {
